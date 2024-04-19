@@ -97,6 +97,7 @@
         <input type="text" id="currency" placeholder="Enter currency (e.g., usd, eur, gbp)">
         <input type="number" id="cryptoAmount" placeholder="Enter amount">
         <button onclick="convertCryptoToCurrency()">Convert</button>
+        <button onclick="refreshPage()">Refresh Page</button>
         <div id="result"></div>
     </div>
    
@@ -110,6 +111,9 @@
             let data = await response.json();
             let convertedAmount = cryptoAmount * data[cryptoId][currency];
             document.getElementById('result').innerHTML = `${cryptoId.toUpperCase()} ${cryptoAmount} = ${currency.toUpperCase()} ${convertedAmount.toFixed(2)}`;
+        }
+        function refreshPage(){
+            location.reload();
         }
     </script>
 </body>
