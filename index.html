@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cryptocurrency Converter</title>
+    <style>
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-image: url(images/background.jpg);
+            background-size: cover;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+        h1{  
+            font-size: 2.5em;
+            color: rgb(17, 0, 128);
+            text-transform: uppercase;
+            text-shadow: 2px 2px #ccc
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        #result {
+            font-size: 25px;
+            color :black;
+            background-color: goldenrod;
+            padding: 10px;
+            border-radius: 5px;
+            animation: pop 1s ease;
+        }
+        .container{
+            display: flex; 
+            width: 50%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px;
+            background-color: #f8f8f8;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 25px;
+        }
+        button{
+            background-color:goldenrod;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background-color: white; 
+            color: goldenrod; 
+            border: 2px solid goldenrod;
+        }
+        input{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+        input:focus {
+           border: 2px solid #555;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+           }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cryptocurrency Converter</h1>
+        <input type="text" id="cryptoId" placeholder="Enter cryptocurrency id (e.g., bitcoin, ethereum)">
+        <input type="text" id="currency" placeholder="Enter currency (e.g., usd, eur, gbp)">
+        <input type="number" id="cryptoAmount" placeholder="Enter amount">
+        <button onclick="convertCryptoToCurrency()">Convert</button>
+        <div id="result"></div>
+    </div>
+   
+
+    <script>
+        async function convertCryptoToCurrency() {
+            let cryptoId = document.getElementById('cryptoId').value;
+            let cryptoAmount = document.getElementById('cryptoAmount').value;
+            let currency = document.getElementById('currency').value;
+            let response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoId}&vs_currencies=${currency}`);
+            let data = await response.json();
+            let convertedAmount = cryptoAmount * data[cryptoId][currency];
+            document.getElementById('result').innerHTML = `${cryptoId.toUpperCase()} ${cryptoAmount} = ${currency.toUpperCase()} ${convertedAmount.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
